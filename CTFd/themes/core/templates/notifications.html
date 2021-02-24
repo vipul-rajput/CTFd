@@ -7,16 +7,13 @@
 		</div>
 	</div>
 	<div class="container">
-		{% if not notifications %}
-		<h2 class="text-center">There are no notifications yet</h2>
-		{% endif %}
 		{% for notification in notifications %}
 		<div class="card bg-light mb-4">
 			<div class="card-body">
 				<h3 class="card-title">{{ notification.title }}</h3>
 				<blockquote class="blockquote mb-0">
-					<p>{{ notification.html }}</p>
-					<small class="text-muted"><span data-time="{{ notification.date | isoformat }}"></span></small>
+					<p>{{ notification.content | safe }}</p>
+					<small class="text-muted">{{ notification.date | isoformat }}</small>
 				</blockquote>
 			</div>
 		</div>
@@ -24,6 +21,7 @@
 	</div>
 {% endblock %}
 
-{% block entrypoint %}
-	<script defer src="{{ url_for('views.themes', path='js/pages/notifications.js') }}"></script>
+{% block scripts %}
+	<script src="{{ url_for('views.themes', path='js/vendor/plotly.min.js') }}"></script>
+	<script src="{{ url_for('views.themes', path='js/utils.js') }}"></script>
 {% endblock %}

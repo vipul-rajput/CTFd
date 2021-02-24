@@ -12,63 +12,44 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 offset-md-3">
-			{% include "components/errors.html" %}
+			{% for error in errors %}
+				<div class="alert alert-danger alert-dismissable" role="alert">
+				  <span class="sr-only">Error:</span>
+				  {{ error }}
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+				</div>
+			{% endfor %}
 
-			{% if integrations.mlc() %}
-			<a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}">
-				Login with Major League Cyber
-			</a>
+			<a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}">Login with Major League Cyber</a>
 
 			<hr>
-			{% endif %}
 
-			{% with form = Forms.auth.RegistrationForm() %}
-			{% from "macros/forms.html" import render_extra_fields %}
-			<form method="post" accept-charset="utf-8" autocomplete="off" role="form">
+			<form method="post" accept-charset="utf-8" autocomplete="off" role="form" class="form-horizontal">
 				<div class="form-group">
-					<b>{{ form.name.label }}</b>
-					{{ form.name(class="form-control", value=name) }}
-					<small class="form-text text-muted">
-						Your username on the site
-					</small>
+					<label for="name-input">
+						User Name
+					</label>
+					<input class="form-control" type="text" name="name" id="name-input" {% if name %}value="{{ name }}"{% endif %} />
 				</div>
 				<div class="form-group">
-					<b>{{ form.email.label }}</b>
-					{{ form.email(class="form-control", value=email) }}
-					<small class="form-text text-muted">
-						Never shown to the public
-					</small>
+					<label for="email-input">
+						Email
+					</label>
+					<input class="form-control" type="text" name="email" id="email-input" {% if email %}value="{{ email }}"{% endif %} />
 				</div>
 				<div class="form-group">
-					<b>{{ form.password.label }}</b>
-					{{ form.password(class="form-control", value=password) }}
-					<small class="form-text text-muted">
-						Password used to log into your account
-					</small>
+					<label for="password-input">
+						Password
+					</label>
+					<input class="form-control" type="password" name="password" id="password-input" {% if password %}value="{{ password }}"{% endif %}/>
 				</div>
-				{{ form.nonce() }}
-
-				{{ render_extra_fields(form.extra) }}
-
 				<div class="row pt-3">
 					<div class="col-md-12">
-						{{ form.submit(class="btn btn-md btn-primary btn-outlined float-right") }}
+						<button type="submit" id="submit" tabindex="5" class="btn btn-md btn-primary btn-outlined float-right">Submit</button>
 					</div>
 				</div>
-
-				{% if Configs.tos_or_privacy %}
-				<div class="row pt-3">
-					<div class="col-md-12 text-center">
-						<small class="text-muted text-center">
-							By registering, you agree to the
-							<a href="{{ Configs.privacy_link }}" rel="noopener" target="_blank">privacy policy</a>
-							and <a href="{{ Configs.tos_link }}" rel="noopener" target="_blank">terms of service</a>
-						</small>
-					</div>
-				</div>
-				{% endif %}
+				<input type="hidden" name="nonce" value="{{ nonce }}">
 			</form>
-			{% endwith %}
 		</div>
 	</div>
 </div>
