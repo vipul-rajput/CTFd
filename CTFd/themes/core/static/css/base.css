@@ -2,6 +2,11 @@ html, body {
     font-family: 'Lato', 'LatoOffline', sans-serif;
     color: #FCFEFF;
     background-color:#0F2228;
+    background-image: url('background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .container {

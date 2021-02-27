@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/jumbotron.css') }}">
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/sticky-footer.css') }}">
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/base.css') }}">
+
 	{% block stylesheets %}{% endblock %}
 	{% for stylesheet in get_registered_stylesheets() %}
 		{% if stylesheet.startswith('http') %}
